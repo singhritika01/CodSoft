@@ -1,0 +1,60 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumberGame {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        Random rand = new Random();
+        int maxGuesses = 5;
+        int score = 0;
+        boolean playAgain = true;
+
+        while (playAgain) {
+            int myNumber = rand.nextInt(100) + 1;
+            int noOfGuesses;
+
+            System.out.println("Welcome to the Number Game!");
+            System.out.println("This game includes two steps: ");
+            System.out.println("1. I will select any number between 1 and 100.");
+            System.out.println(
+                    "2. After that, you have to guess the number same as the number I have selected and also remember that you have "
+                            + maxGuesses + " no of guesses!");
+
+            boolean rightGuess = false;
+
+            for (noOfGuesses = 1; noOfGuesses <= maxGuesses; noOfGuesses++) {
+                System.out.println("Guess no. " + noOfGuesses);
+                System.out.print("Please enter your guessed number: ");
+                int yourNumber = scan.nextInt();
+                scan.nextLine(); // Consume newline character after nextInt()
+
+                if (yourNumber < myNumber) {
+                    System.out.println("Oops! It's too low.");
+                } else if (yourNumber > myNumber) {
+                    System.out.println("Oops! It's too high.");
+                } else {
+                    System.out.println("Woohoo! You guessed it right in " + noOfGuesses + " guesses.");
+                    rightGuess = true;
+                    score++;
+                    break; // Exit the for loop if guessed correctly
+                }
+            }
+
+            if (!rightGuess) {
+                System.out.println("Sorry, you ran out of guesses.");
+                System.out.println("The number I selected was: " + myNumber);
+            }
+
+            System.out.print("Do you want to play again? (yes/no): ");
+            String playAgainResponse = scan.nextLine().toLowerCase(); // Read the response and convert to lowercase
+            if (!playAgainResponse.equals("yes")) {
+                playAgain = false;
+            }
+        }
+
+        System.out.println("Your score is: " + score);
+        System.out.println("Thank you for playing!");
+        scan.close();
+    }
+}
